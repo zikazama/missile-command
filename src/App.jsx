@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import MapContainer from './components/Map/MapContainer';
 import Header from './components/UI/Header';
 import WeaponMenu from './components/UI/WeaponMenu';
@@ -8,13 +8,18 @@ import MobileCollapsedBar from './components/UI/MobileCollapsedBar';
 import AboutModal from './components/UI/AboutModal';
 import { useGameState, GAME_STATES } from './hooks/useGameState';
 import { CAPITALS } from './data/capitals';
-import { initAudio, playLaunchSound, playExplosionSound } from './utils/soundEffects';
+import { initAudio, playLaunchSound, playExplosionSound, enableAudioOnInteraction } from './utils/soundEffects';
 import './App.css';
 
 function App() {
   const [aboutOpen, setAboutOpen] = useState(false);
   const [bottomSheetCollapsed, setBottomSheetCollapsed] = useState(false);
   const bottomSheetRef = useRef(null);
+
+  // Initialize audio on component mount - needed for iOS
+  useEffect(() => {
+    enableAudioOnInteraction();
+  }, []);
 
   const {
     gameState,
