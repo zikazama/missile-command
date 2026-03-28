@@ -12,10 +12,11 @@
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   max-height: 85vh;
   overflow: hidden;
+  padding-bottom: max(0px, env(safe-area-inset-bottom));
 }
 
 .bottom-sheet.collapsed {
-  transform: translateY(calc(100% - 140px));
+  transform: translateY(calc(100% - 100px));
 }
 
 .bottom-sheet.expanded {
@@ -55,7 +56,8 @@
 .sheet-content {
   padding: 0 16px 24px;
   overflow-y: auto;
-  max-height: calc(85vh - 60px);
+  max-height: calc(85vh - 60px - env(safe-area-inset-bottom, 0px));
+  padding-bottom: max(24px, env(safe-area-inset-bottom, 0px));
 }
 
 /* Hide scrollbar but allow scrolling */
@@ -79,10 +81,29 @@
   }
 
   .bottom-sheet.collapsed {
-    transform: translateY(calc(100% - 120px));
+    transform: translateY(calc(100% - 80px));
   }
 
   .sheet-content {
-    max-height: calc(90vh - 50px);
+    max-height: calc(90vh - 50px - env(safe-area-inset-bottom, 0px));
+  }
+}
+
+@media (max-width: 360px) {
+  .bottom-sheet.collapsed {
+    transform: translateY(calc(100% - 70px));
+  }
+
+  .handle-bar {
+    width: 40px;
+    height: 4px;
+  }
+
+  .handle-indicator {
+    font-size: 8px;
+  }
+
+  .sheet-content {
+    max-height: calc(100vh - 70px - 60px - env(safe-area-inset-bottom, 0px));
   }
 }

@@ -22,6 +22,11 @@
   --border-color: #2a2a4e;
   --glow-red: rgba(233, 69, 96, 0.5);
   --glow-green: rgba(68, 255, 68, 0.5);
+  --safe-area-inset-top: env(safe-area-inset-top, 0px);
+  --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+  --header-height: 50px;
+  --bottom-sheet-collapsed: 100px;
+  --touch-target-min: 44px;
 }
 
 html, body, #root {
@@ -467,9 +472,9 @@ body {
 
 /* Attack Timer */
 .attack-timer {
-  position: absolute;
-  left: 16px;
-  top: 0;
+  position: relative;
+  left: auto;
+  top: auto;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -480,6 +485,7 @@ body {
   border-radius: 8px;
   box-shadow: 0 0 15px var(--glow-red);
   z-index: 10;
+  margin-bottom: 12px;
 }
 
 .timer-main {
@@ -593,12 +599,13 @@ body {
 }
 
 .step-buttons {
-  position: absolute;
-  right: 16px;
-  top: 0;
+  position: relative;
+  right: auto;
+  top: auto;
   display: flex;
-  gap: 8px;
+  gap: 6px;
   align-items: center;
+  margin-left: auto;
 }
 
 .step-attack-btn {
@@ -1091,40 +1098,70 @@ body {
 
 @media (max-width: 768px) {
   .header {
-    padding: 8px 12px;
-    flex-wrap: wrap;
-    gap: 8px;
+    padding: 6px 12px;
+    gap: 6px;
+    min-height: 50px;
   }
 
   .header-left {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .header-center {
-    width: 100%;
-    justify-content: center;
-    order: 3;
-  }
-
-  .header-right {
-    width: 100%;
-    justify-content: center;
-    order: 2;
-  }
-
-  .logo-text {
-    font-size: 14px;
-    letter-spacing: 1px;
-  }
-
-  .selected-weapon {
-    padding: 6px 12px;
+    width: auto;
+    flex: 0 0 auto;
     gap: 8px;
   }
 
+  .header-center {
+    width: auto;
+    flex: 1 1 auto;
+    order: 0;
+    justify-content: center;
+  }
+
+  .header-right {
+    width: auto;
+    flex: 0 0 auto;
+    order: 0;
+    gap: 8px;
+  }
+
+  .logo-text {
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+
+  .version {
+    display: none;
+  }
+
+  .selected-weapon {
+    padding: 4px 10px;
+    gap: 6px;
+  }
+
+  .selected-weapon .weapon-icon {
+    font-size: 16px;
+  }
+
   .selected-weapon .weapon-name {
-    font-size: 11px;
+    font-size: 10px;
+  }
+
+  .selected-weapon .weapon-type {
+    font-size: 8px;
+    padding: 1px 4px;
+  }
+
+  .about-button {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+
+  .status-indicator {
+    padding: 4px 8px;
+  }
+
+  .status-text {
+    font-size: 9px;
   }
 
   .step-progress {
@@ -1197,15 +1234,18 @@ body {
 
 @media (max-width: 480px) {
   .header {
-    padding: 6px 10px;
+    padding: 4px 8px;
+    gap: 4px;
+    min-height: 44px;
   }
 
   .logo-icon {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   .logo-text {
-    font-size: 12px;
+    font-size: 10px;
+    letter-spacing: 0;
   }
 
   .version {
@@ -1213,66 +1253,197 @@ body {
   }
 
   .about-button {
-    width: 30px;
-    height: 30px;
-    font-size: 14px;
+    width: 26px;
+    height: 26px;
+    font-size: 11px;
   }
 
   .status-indicator {
-    padding: 4px 10px;
+    padding: 3px 6px;
+    gap: 4px;
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
   }
 
   .status-text {
-    font-size: 10px;
+    font-size: 8px;
+    letter-spacing: 0;
+  }
+
+  .selected-weapon {
+    padding: 3px 8px;
+    gap: 4px;
+  }
+
+  .selected-weapon .weapon-icon {
+    font-size: 14px;
+  }
+
+  .selected-weapon .weapon-name {
+    font-size: 9px;
+  }
+
+  .selected-weapon .weapon-type {
+    display: none;
   }
 
   .weapon-menu {
     width: 95%;
-    top: 70px;
+    max-width: calc(100vw - 16px);
+    top: max(60px, calc(50px + var(--safe-area-inset-top)));
+    max-height: calc(100vh - 120px - var(--safe-area-inset-top) - var(--safe-area-inset-bottom));
   }
 
-  .weapon-item {
+  .attack-timer {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 6px 10px;
+  }
+
+  .timer-main {
+    gap: 6px;
+  }
+
+  .timer-icon {
+    font-size: 14px;
+  }
+
+  .timer-value {
+    font-size: 14px;
+  }
+
+  .timer-ratio {
+    font-size: 9px;
+    margin-left: 0;
+    text-align: center;
+  }
+
+  .step-buttons {
+    position: absolute;
+    right: 8px;
+    top: -5px;
+  }
+
+  .step-attack-btn,
+  .step-reset-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+  }
+
+  .step-progress {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .step-progress .step {
+    flex: 0 0 auto;
+  }
+}
+
+@media (max-width: 360px) {
+  .header {
+    padding: 3px 6px;
+    min-height: 40px;
+  }
+
+  .logo-icon {
+    font-size: 16px;
+  }
+
+  .logo-text {
+    font-size: 9px;
+    letter-spacing: 0;
+  }
+
+  .header-center {
+    flex: 1 1 60%;
+  }
+
+  .status-text {
+    display: none;
+  }
+
+  .weapon-menu {
+    width: 98%;
+    top: max(50px, calc(45px + var(--safe-area-inset-top)));
+    max-height: calc(100vh - 100px - var(--safe-area-inset-top) - var(--safe-area-inset-bottom));
+  }
+
+  .weapon-menu-header {
     padding: 10px 12px;
   }
 
-  .weapon-icon-large {
-    font-size: 28px;
-    width: 35px;
+  .weapon-menu-header h3 {
+    font-size: 11px;
   }
 
-  .weapon-stats {
+  .weapon-list {
+    max-height: 200px;
+  }
+
+  .step-buttons {
+    position: static;
+    width: 100%;
+    justify-content: center;
+    margin-top: 8px;
+    margin-left: 0;
+  }
+
+  .step-reset-btn {
+    order: -1;
+  }
+
+  .step-progress {
     flex-direction: column;
-    gap: 4px;
-  }
-
-  .step-num {
-    width: 20px;
-    height: 20px;
-    font-size: 9px;
-  }
-
-  .step-label {
-    font-size: 6px;
+    gap: 8px;
   }
 
   .step-line {
-    width: 10px;
-    margin-bottom: 14px;
+    display: none;
   }
 
-  .select-icon {
-    font-size: 24px;
+  .bottom-sheet.collapsed {
+    transform: translateY(calc(100% - 70px));
+  }
+}
+
+/* Touch optimizations */
+.weapon-list,
+.sheet-content {
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+button,
+.select-button,
+.weapon-select-button,
+.attack-button {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.weapon-item,
+.step-num,
+.step-attack-btn {
+  touch-action: manipulation;
+}
+
+/* Touch device hover reset */
+@media (hover: none) and (pointer: coarse) {
+  .select-button:hover:not(:disabled) {
+    border-color: var(--border-color);
+    transform: none;
+    box-shadow: none;
   }
 
-  .select-label {
-    font-size: 9px;
-  }
-
-  .select-value {
-    font-size: 12px;
-  }
-
-  .select-placeholder {
-    font-size: 10px;
+  .select-button:active:not(:disabled) {
+    border-color: var(--accent-blue);
+    transform: scale(0.98);
   }
 }
