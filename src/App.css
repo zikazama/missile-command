@@ -9,6 +9,16 @@
   box-sizing: border-box;
 }
 
+html {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 :root {
   --primary-bg: #0a0a12;
   --secondary-bg: #1a1a2e;
@@ -27,6 +37,7 @@
   --header-height: 50px;
   --bottom-sheet-collapsed: 100px;
   --touch-target-min: 44px;
+  font-size: clamp(14px, 2.5vw, 16px);
 }
 
 html, body, #root {
@@ -39,6 +50,10 @@ body {
   font-family: 'Share Tech Mono', monospace;
   background: var(--primary-bg);
   color: var(--text-primary);
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  -webkit-touch-callout: none;
 }
 
 /* ============================================
@@ -52,6 +67,7 @@ body {
   width: 100vw;
   position: relative;
   overflow: hidden;
+  max-width: 100vw;
 }
 
 .main-content {
@@ -68,11 +84,14 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 24px;
+  padding: max(12px, 1vh) max(24px, 2vw);
+  gap: clamp(8px, 2vw, 16px);
   background: linear-gradient(180deg, var(--secondary-bg) 0%, var(--primary-bg) 100%);
   border-bottom: 2px solid var(--accent-red);
   box-shadow: 0 0 20px var(--glow-red);
   z-index: 100;
+  flex-wrap: nowrap;
+  min-height: 50px;
 }
 
 .header-left {
@@ -88,57 +107,67 @@ body {
 }
 
 .logo-icon {
-  font-size: 28px;
+  font-size: clamp(20px, 4vw, 28px);
 }
 
 .logo-text {
   font-family: 'Orbitron', sans-serif;
-  font-size: 20px;
+  font-size: clamp(12px, 2.5vw, 20px);
   font-weight: 900;
-  letter-spacing: 3px;
+  letter-spacing: clamp(1px, 0.5vw, 3px);
   color: var(--accent-red);
   text-shadow: 0 0 10px var(--glow-red);
+  white-space: nowrap;
+}
 }
 
 .version {
-  font-size: 10px;
+  font-size: clamp(8px, 1.5vw, 10px);
   color: var(--text-secondary);
-  padding: 2px 8px;
+  padding: 2px max(4px, 0.5vw);
   border: 1px solid var(--border-color);
   border-radius: 4px;
+  white-space: nowrap;
 }
 
 .header-center {
-  display: flex;
+  display: none;
   align-items: center;
+}
+
+@media (min-width: 640px) {
+  .header-center {
+    display: flex;
+  }
 }
 
 .selected-weapon {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 8px 20px;
+  gap: clamp(6px, 1vw, 12px);
+  padding: max(4px, 0.5vh) max(10px, 1vw);
   background: var(--tertiary-bg);
   border: 1px solid var(--accent-blue);
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(68, 136, 255, 0.3);
+  white-space: nowrap;
 }
 
 .selected-weapon .weapon-icon {
-  font-size: 24px;
+  font-size: clamp(16px, 2vw, 24px);
 }
 
 .selected-weapon .weapon-name {
   font-family: 'Orbitron', sans-serif;
-  font-size: 14px;
+  font-size: clamp(9px, 1.5vw, 14px);
   font-weight: 700;
   color: var(--text-primary);
 }
 
 .selected-weapon .weapon-type {
-  font-size: 10px;
+  font-size: clamp(7px, 1vw, 10px);
   color: var(--accent-blue);
-  padding: 2px 6px;
+  padding: 1px max(3px, 0.5vw);
   border: 1px solid var(--accent-blue);
   border-radius: 4px;
 }
@@ -146,36 +175,49 @@ body {
 .header-right {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: clamp(6px, 1vw, 12px);
+  margin-left: auto;
 }
 
 .about-button {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  min-width: 44px;
+  min-height: 44px;
+  width: clamp(36px, 8vw, 44px);
+  height: clamp(36px, 8vw, 44px);
   background: var(--secondary-bg);
   border: 2px solid var(--accent-blue);
   border-radius: 50%;
-  font-size: 16px;
+  font-size: clamp(14px, 2vw, 18px);
   cursor: pointer;
   transition: all 0.2s ease;
+  -webkit-touch-callout: none;
 }
 
-.about-button:hover {
+.about-button:active {
   background: var(--accent-blue);
   box-shadow: 0 0 15px rgba(68, 136, 255, 0.5);
+}
+
+@media (hover: any) {
+  .about-button:hover {
+    background: var(--accent-blue);
+    box-shadow: 0 0 15px rgba(68, 136, 255, 0.5);
+  }
 }
 
 .status-indicator {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 16px;
+  gap: clamp(4px, 1vw, 8px);
+  padding: max(4px, 0.5vh) max(8px, 1vw);
   background: var(--secondary-bg);
   border: 1px solid var(--border-color);
   border-radius: 6px;
+  min-height: 44px;
+  white-space: nowrap;
 }
 
 .status-indicator.active {
@@ -184,10 +226,11 @@ body {
 }
 
 .status-dot {
-  width: 8px;
-  height: 8px;
+  width: clamp(6px, 1.5vw, 8px);
+  height: clamp(6px, 1.5vw, 8px);
   border-radius: 50%;
   background: var(--accent-green);
+  flex-shrink: 0;
 }
 
 .status-indicator.active .status-dot {
@@ -201,9 +244,9 @@ body {
 }
 
 .status-text {
-  font-size: 12px;
+  font-size: clamp(8px, 1.5vw, 12px);
   font-weight: bold;
-  letter-spacing: 1px;
+  letter-spacing: clamp(0.5px, 0.5vw, 1px);
   color: var(--text-secondary);
 }
 
@@ -1096,35 +1139,62 @@ body {
    RESPONSIVE
    ============================================ */
 
-@media (max-width: 768px) {
-  .header {
-    padding: 6px 12px;
-    gap: 6px;
-    min-height: 50px;
-  }
-
+/* Mobile Optimizations - Base */
+@media (max-width: 1024px) {
   .header-left {
-    width: auto;
     flex: 0 0 auto;
-    gap: 8px;
   }
 
   .header-center {
-    width: auto;
     flex: 1 1 auto;
-    order: 0;
     justify-content: center;
+    order: -1;
   }
 
   .header-right {
-    width: auto;
     flex: 0 0 auto;
-    order: 0;
-    gap: 8px;
+  }
+}
+
+/* Tablet & Large Mobile (640px - 1024px) */
+@media (max-width: 1024px) and (min-width: 640px) {
+  :root {
+    font-size: 15px;
+  }
+
+  .header {
+    padding: max(10px, 1.5vh) max(16px, 1.5vw);
+    min-height: 48px;
+  }
+
+  .selected-weapon {
+    padding: 6px 12px;
+  }
+
+  .status-indicator {
+    min-height: 40px;
+  }
+
+  .about-button {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* Medium Mobile (480px - 640px) */
+@media (max-width: 640px) {
+  :root {
+    font-size: 14px;
+  }
+
+  .header {
+    padding: max(8px, 1.2vh) max(12px, 1vw);
+    min-height: 46px;
+    gap: 6px;
   }
 
   .logo-text {
-    font-size: 12px;
+    font-size: 14px;
     letter-spacing: 1px;
   }
 
@@ -1133,8 +1203,8 @@ body {
   }
 
   .selected-weapon {
-    padding: 4px 10px;
-    gap: 6px;
+    padding: 4px 8px;
+    gap: 4px;
   }
 
   .selected-weapon .weapon-icon {
@@ -1147,21 +1217,29 @@ body {
 
   .selected-weapon .weapon-type {
     font-size: 8px;
-    padding: 1px 4px;
+    padding: 1px 3px;
+    display: none;
   }
 
   .about-button {
-    width: 28px;
-    height: 28px;
-    font-size: 12px;
+    width: 38px;
+    height: 38px;
   }
 
   .status-indicator {
-    padding: 4px 8px;
+    padding: 4px 6px;
+    min-height: 38px;
+    gap: 6px;
   }
 
   .status-text {
     font-size: 9px;
+    letter-spacing: 0;
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
   }
 
   .step-progress {
@@ -1185,12 +1263,13 @@ body {
 
   .selection-buttons {
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
   }
 
   .select-button {
     max-width: 100%;
-    padding: 14px 16px;
+    padding: 12px 16px;
+    min-height: 44px;
   }
 
   .select-arrow {
@@ -1204,11 +1283,17 @@ body {
   .stats-display {
     flex-wrap: wrap;
     gap: 12px;
+    padding: 10px 14px;
+  }
+
+  .stat-item .stat-value {
+    font-size: 12px;
   }
 
   .action-buttons {
     flex-direction: column;
     gap: 8px;
+    padding: 0 12px;
   }
 
   .attack-button,
@@ -1216,56 +1301,108 @@ body {
   .reset-button {
     width: 100%;
     justify-content: center;
-  }
-
-  .attack-button {
-    padding: 16px 30px;
-    font-size: 14px;
+    padding: 14px 24px;
+    font-size: 13px;
+    min-height: 44px;
   }
 
   .control-panel {
-    padding: 12px 16px 20px;
+    padding: 12px 12px 16px;
   }
 
   .instruction-text {
     font-size: 10px;
   }
-}
 
-@media (max-width: 480px) {
-  .header {
-    padding: 4px 8px;
-    gap: 4px;
-    min-height: 44px;
+  .instruction-banner {
+    padding: 8px;
+    gap: 8px;
   }
 
-  .logo-icon {
+  .instruction-icon {
     font-size: 18px;
   }
 
-  .logo-text {
+  .weapon-menu {
+    width: 95%;
+    max-width: calc(100vw - 16px);
+    top: max(55px, calc(46px + var(--safe-area-inset-top)));
+    max-height: calc(100vh - 110px - var(--safe-area-inset-top) - var(--safe-area-inset-bottom));
+  }
+
+  .weapon-menu-header {
+    padding: 12px 14px;
+  }
+
+  .weapon-menu-header h3 {
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+
+  .weapon-list {
+    max-height: 250px;
+    padding: 10px;
+  }
+
+  .weapon-item {
+    padding: 8px 10px;
+    gap: 10px;
+    min-height: 44px;
+  }
+
+  .weapon-icon-large {
+    font-size: 20px;
+    width: 32px;
+  }
+
+  .weapon-info .weapon-name {
     font-size: 10px;
+  }
+
+  .weapon-info .weapon-class {
+    font-size: 8px;
+  }
+
+  .weapon-stats .stat {
+    font-size: 8px;
+  }
+}
+
+/* Small Mobile (360px - 480px) */
+@media (max-width: 480px) {
+  :root {
+    font-size: 13px;
+  }
+
+  .header {
+    padding: max(6px, 1vh) max(8px, 0.8vw);
+    min-height: 44px;
+    gap: 4px;
+  }
+
+  .logo-icon {
+    font-size: 16px;
+  }
+
+  .logo-text {
+    font-size: 12px;
     letter-spacing: 0;
   }
 
-  .version {
-    display: none;
+  .header-left {
+    gap: 4px;
   }
 
   .about-button {
-    width: 26px;
-    height: 26px;
-    font-size: 11px;
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
   }
 
   .status-indicator {
     padding: 3px 6px;
     gap: 4px;
-  }
-
-  .status-dot {
-    width: 6px;
-    height: 6px;
+    min-height: 36px;
   }
 
   .status-text {
@@ -1273,9 +1410,14 @@ body {
     letter-spacing: 0;
   }
 
+  .status-dot {
+    width: 6px;
+    height: 6px;
+  }
+
   .selected-weapon {
-    padding: 3px 8px;
-    gap: 4px;
+    padding: 3px 6px;
+    gap: 3px;
   }
 
   .selected-weapon .weapon-icon {
@@ -1291,86 +1433,9 @@ body {
   }
 
   .weapon-menu {
-    width: 95%;
-    max-width: calc(100vw - 16px);
-    top: max(60px, calc(50px + var(--safe-area-inset-top)));
-    max-height: calc(100vh - 120px - var(--safe-area-inset-top) - var(--safe-area-inset-bottom));
-  }
-
-  .attack-timer {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    padding: 6px 10px;
-  }
-
-  .timer-main {
-    gap: 6px;
-  }
-
-  .timer-icon {
-    font-size: 14px;
-  }
-
-  .timer-value {
-    font-size: 14px;
-  }
-
-  .timer-ratio {
-    font-size: 9px;
-    margin-left: 0;
-    text-align: center;
-  }
-
-  .step-buttons {
-    position: absolute;
-    right: 8px;
-    top: -5px;
-  }
-
-  .step-attack-btn,
-  .step-reset-btn {
-    width: 28px;
-    height: 28px;
-    font-size: 14px;
-  }
-
-  .step-progress {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .step-progress .step {
-    flex: 0 0 auto;
-  }
-}
-
-@media (max-width: 360px) {
-  .header {
-    padding: 3px 6px;
-    min-height: 40px;
-  }
-
-  .logo-icon {
-    font-size: 16px;
-  }
-
-  .logo-text {
-    font-size: 9px;
-    letter-spacing: 0;
-  }
-
-  .header-center {
-    flex: 1 1 60%;
-  }
-
-  .status-text {
-    display: none;
-  }
-
-  .weapon-menu {
-    width: 98%;
-    top: max(50px, calc(45px + var(--safe-area-inset-top)));
+    width: 96%;
+    max-width: calc(100vw - 12px);
+    top: max(52px, calc(44px + var(--safe-area-inset-top)));
     max-height: calc(100vh - 100px - var(--safe-area-inset-top) - var(--safe-area-inset-bottom));
   }
 
@@ -1382,8 +1447,88 @@ body {
     font-size: 11px;
   }
 
+  .close-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 18px;
+  }
+
   .weapon-list {
-    max-height: 200px;
+    max-height: 220px;
+    padding: 8px;
+  }
+
+  .weapon-item {
+    padding: 6px 8px;
+    gap: 8px;
+    min-height: 40px;
+    margin-bottom: 2px;
+  }
+
+  .weapon-icon-large {
+    font-size: 18px;
+    width: 28px;
+  }
+
+  .weapon-info .weapon-name {
+    font-size: 9px;
+  }
+
+  .weapon-class {
+    font-size: 7px !important;
+  }
+
+  .weapon-stats .stat {
+    font-size: 7px;
+  }
+
+  .attack-timer {
+    width: 100%;
+    padding: 6px 10px;
+    margin-bottom: 10px;
+  }
+
+  .timer-main {
+    gap: 6px;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .timer-icon {
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .timer-value {
+    font-size: 14px;
+  }
+
+  .timer-ratio {
+    font-size: 8px;
+    margin-left: 0;
+    text-align: center;
+    width: 100%;
+  }
+
+  .step-progress {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .step-num {
+    width: 20px;
+    height: 20px;
+    font-size: 9px;
+  }
+
+  .step-label {
+    font-size: 6px;
+  }
+
+  .step-line {
+    display: none;
   }
 
   .step-buttons {
@@ -1392,10 +1537,247 @@ body {
     justify-content: center;
     margin-top: 8px;
     margin-left: 0;
+    gap: 6px;
   }
 
   .step-reset-btn {
-    order: -1;
+    order: 1;
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+
+  .step-attack-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+
+  .attack-button {
+    padding: 12px 20px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    min-height: 44px;
+  }
+
+  .attack-icon {
+    font-size: 24px;
+  }
+
+  .weapon-select-button,
+  .reset-button {
+    padding: 12px 16px;
+    font-size: 11px;
+    min-height: 40px;
+  }
+
+  .weapon-select-button .btn-icon,
+  .reset-button .btn-icon {
+    font-size: 16px;
+  }
+
+  .control-panel {
+    padding: 10px 10px 14px;
+  }
+
+  .stats-display {
+    gap: 10px;
+    padding: 8px 10px;
+  }
+
+  .stat-item .stat-icon {
+    font-size: 14px;
+  }
+
+  .stat-item .stat-label {
+    font-size: 8px;
+  }
+
+  .stat-item .stat-value {
+    font-size: 11px;
+  }
+
+  .warning-banner {
+    font-size: 10px;
+    padding: 6px;
+    margin-bottom: 8px;
+  }
+
+  .warning-icon {
+    font-size: 14px;
+  }
+
+  .instruction-banner {
+    padding: 6px;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+
+  .instruction-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .instruction-text {
+    font-size: 9px;
+    letter-spacing: 0.5px;
+  }
+
+  .weapon-select-button.large {
+    padding: 8px 12px;
+    gap: 6px;
+  }
+
+  .weapon-select-button.large .btn-icon {
+    font-size: 16px;
+  }
+
+  .weapon-select-button.large .btn-text {
+    font-size: 9px;
+    letter-spacing: 0.5px;
+  }
+
+  .select-button {
+    padding: 12px 12px;
+    min-height: 40px;
+  }
+
+  .select-icon {
+    font-size: 28px;
+  }
+
+  .select-label {
+    font-size: 9px;
+  }
+
+  .select-value {
+    font-size: 12px;
+  }
+
+  .select-placeholder {
+    font-size: 11px;
+  }
+
+  .bottom-sheet.collapsed {
+    transform: translateY(calc(100% - 70px));
+  }
+}
+
+/* Extra Small Mobile (< 360px) */
+@media (max-width: 360px) {
+  :root {
+    font-size: 13px;
+  }
+
+  .header {
+    padding: 4px 6px;
+    min-height: 40px;
+  }
+
+  .logo-icon {
+    font-size: 14px;
+  }
+
+  .logo-text {
+    font-size: 10px;
+    letter-spacing: 0;
+  }
+
+  .header-center {
+    flex: 1 0 50%;
+  }
+
+  .status-text {
+    display: none;
+  }
+
+  .header-right {
+    gap: 4px;
+  }
+
+  .about-button {
+    width: 34px;
+    height: 34px;
+  }
+
+  .status-indicator {
+    min-height: 34px;
+    padding: 2px 4px;
+  }
+
+  .status-dot {
+    width: 5px;
+    height: 5px;
+  }
+
+  .weapon-menu {
+    width: 98%;
+    top: max(50px, calc(40px + var(--safe-area-inset-top)));
+    max-height: calc(100vh - 90px - var(--safe-area-inset-top) - var(--safe-area-inset-bottom));
+  }
+
+  .weapon-menu-header {
+    padding: 8px 10px;
+  }
+
+  .weapon-menu-header h3 {
+    font-size: 10px;
+  }
+
+  .weapon-list {
+    max-height: 180px;
+    padding: 6px;
+  }
+
+  .weapon-item {
+    padding: 5px 6px;
+    gap: 6px;
+    min-height: 36px;
+  }
+
+  .weapon-icon-large {
+    font-size: 16px;
+    width: 24px;
+  }
+
+  .weapon-info .weapon-name {
+    font-size: 8px;
+    margin-bottom: 0;
+  }
+
+  .weapon-class {
+    font-size: 6px !important;
+  }
+
+  .weapon-stats .stat {
+    font-size: 6px;
+  }
+
+  .close-btn {
+    width: 26px;
+    height: 26px;
+    font-size: 16px;
+  }
+
+  .attack-button {
+    padding: 10px 16px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    min-height: 40px;
+  }
+
+  .attack-icon {
+    font-size: 20px;
+  }
+
+  .control-panel {
+    padding: 8px 8px 12px;
+  }
+
+  .bottom-sheet.collapsed {
+    transform: translateY(calc(100% - 60px));
+  }
+}
   }
 
   .step-progress {
@@ -1426,15 +1808,41 @@ button,
 .attack-button {
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
 }
 
 .weapon-item,
 .step-num,
-.step-attack-btn {
+.step-attack-btn,
+.collapsed-attack-btn,
+.collapsed-reset-btn {
   touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
 }
 
-/* Touch device hover reset */
+/* Prevent horizontal scroll on mobile */
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+.app {
+  max-width: 100vw;
+}
+
+/* Prevent zoom on double tap but allow pinch to zoom for accessibility */
+@media (pointer: coarse) {
+  input,
+  textarea,
+  select,
+  button {
+    font-size: 16px;
+  }
+}
+
+/* Touch device hover reset and active state optimization */
 @media (hover: none) and (pointer: coarse) {
   .select-button:hover:not(:disabled) {
     border-color: var(--border-color);
@@ -1445,5 +1853,94 @@ button,
   .select-button:active:not(:disabled) {
     border-color: var(--accent-blue);
     transform: scale(0.98);
+  }
+
+  .about-button:hover {
+    background: var(--secondary-bg);
+    box-shadow: none;
+  }
+
+  .about-button:active {
+    background: var(--accent-blue);
+    box-shadow: 0 0 15px rgba(68, 136, 255, 0.5);
+  }
+
+  .weapon-item:hover:not(:disabled) {
+    border-color: var(--border-color);
+    box-shadow: none;
+    transform: none;
+  }
+
+  .weapon-item:active:not(:disabled) {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 15px rgba(68, 136, 255, 0.3);
+    transform: scale(0.98);
+  }
+
+  button:active {
+    transform: scale(0.95);
+  }
+}
+
+/* Safe area adjustments for notched devices */
+@supports (padding: max(0px)) {
+  body {
+    padding-left: max(12px, env(safe-area-inset-left));
+    padding-right: max(12px, env(safe-area-inset-right));
+  }
+
+  .header {
+    padding-left: max(8px, env(safe-area-inset-left));
+    padding-right: max(8px, env(safe-area-inset-right));
+  }
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High DPI screen adjustments */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  button,
+  .select-button,
+  .weapon-select-button,
+  .attack-button {
+    border-width: 1.5px;
+  }
+}
+
+/* Responsive font size using clamp for better scaling */
+@media (max-width: 320px) {
+  :root {
+    font-size: 12px;
+  }
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+  :root {
+    font-size: 13px;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 640px) {
+  :root {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  :root {
+    font-size: 15px;
+  }
+}
+
+@media (min-width: 1025px) {
+  :root {
+    font-size: 16px;
   }
 }

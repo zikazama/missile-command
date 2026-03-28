@@ -11,6 +11,8 @@
   justify-content: center;
   z-index: 10000;
   animation: fadeIn 0.3s ease;
+  padding: max(12px, 2vw);
+  overflow: hidden;
 }
 
 @keyframes fadeIn {
@@ -20,21 +22,36 @@
 
 .about-modal {
   position: relative;
-  width: 90%;
-  max-width: 500px;
-  max-height: 90vh;
+  width: clamp(280px, 95vw, 600px);
+  max-height: clamp(70vh, 90vh, 100vh);
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   background: linear-gradient(180deg, #1a1a2e 0%, #0a0a12 100%);
   border: 2px solid #e94560;
-  border-radius: 20px;
+  border-radius: clamp(12px, 3vw, 20px);
   box-shadow: 0 0 60px rgba(233, 69, 96, 0.5), 0 0 120px rgba(233, 69, 96, 0.2);
   animation: modalSlide 0.4s ease;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(233, 69, 96, 0.5) transparent;
+}
+
+.about-modal::-webkit-scrollbar {
+  width: 4px;
+}
+
+.about-modal::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.about-modal::-webkit-scrollbar-thumb {
+  background: rgba(233, 69, 96, 0.5);
+  border-radius: 2px;
 }
 
 @keyframes modalSlide {
   from {
     opacity: 0;
-    transform: translateY(-50px) scale(0.9);
+    transform: translateY(-30px) scale(0.9);
   }
   to {
     opacity: 1;
@@ -44,10 +61,12 @@
 
 .about-close {
   position: absolute;
-  top: 15px;
-  right: 15px;
-  width: 36px;
-  height: 36px;
+  top: max(12px, 1.5vh);
+  right: max(12px, 1.5vw);
+  width: clamp(32px, 8vw, 44px);
+  height: clamp(32px, 8vw, 44px);
+  min-width: 44px;
+  min-height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -55,48 +74,58 @@
   border: 2px solid #e94560;
   border-radius: 50%;
   color: #e94560;
-  font-size: 24px;
+  font-size: clamp(18px, 2.5vw, 24px);
   cursor: pointer;
   transition: all 0.2s ease;
   z-index: 1;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.about-close:hover {
+.about-close:active {
   background: #e94560;
   color: white;
   transform: rotate(90deg);
 }
 
+@media (hover: any) {
+  .about-close:hover {
+    background: #e94560;
+    color: white;
+    transform: rotate(90deg);
+  }
+}
+
 .about-header {
   text-align: center;
-  padding: 30px 20px 20px;
+  padding: clamp(20px, 3vh, 30px) clamp(16px, 3vw, 20px) clamp(16px, 2vh, 20px);
   border-bottom: 1px solid rgba(233, 69, 96, 0.3);
 }
 
 .about-logo {
   font-family: 'Orbitron', sans-serif;
-  font-size: 24px;
+  font-size: clamp(18px, 4vw, 28px);
   font-weight: 900;
   color: #e94560;
   text-shadow: 0 0 20px rgba(233, 69, 96, 0.5);
-  letter-spacing: 3px;
+  letter-spacing: clamp(1px, 0.5vw, 3px);
 }
 
 .about-subtitle {
   font-family: 'Share Tech Mono', monospace;
-  font-size: 12px;
+  font-size: clamp(10px, 1.5vw, 12px);
   color: #a0a0a0;
-  margin-top: 5px;
-  letter-spacing: 2px;
+  margin-top: clamp(3px, 0.5vh, 8px);
+  letter-spacing: clamp(1px, 0.5vw, 2px);
 }
 
 .about-content {
-  padding: 30px;
+  padding: clamp(16px, 2.5vh, 30px) clamp(14px, 2.5vw, 30px);
 }
 
 .about-profile {
   text-align: center;
-  margin-bottom: 25px;
+  margin-bottom: clamp(16px, 2vh, 25px);
 }
 
 .about-avatar {
