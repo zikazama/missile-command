@@ -1,11 +1,18 @@
 import { useState, useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
 import './BottomSheet.css';
 
-const BottomSheet = forwardRef(({ children, isOpen, onToggle }, ref) => {
+const BottomSheet = forwardRef(({ children, isOpen, onToggle, onCollapseChange }, ref) => {
   const [isExpanded, setIsExpanded] = useState(true);
   const [startY, setStartY] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const sheetRef = useRef(null);
+
+  // Notify parent when collapse state changes
+  useEffect(() => {
+    if (onCollapseChange) {
+      onCollapseChange(!isExpanded);
+    }
+  }, [isExpanded, onCollapseChange]);
 
   useImperativeHandle(ref, () => ({
     collapse: () => setIsExpanded(false),

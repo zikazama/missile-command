@@ -1,0 +1,182 @@
+/* Mobile Collapsed Bar - Shows critical controls when bottom sheet is collapsed */
+.mobile-collapsed-bar {
+  display: none;
+  position: fixed;
+  bottom: 85px;
+  left: 0;
+  right: 0;
+  background: linear-gradient(180deg, rgba(26, 26, 46, 0.98) 0%, rgba(10, 10, 18, 0.98) 100%);
+  border-top: 1px solid var(--accent-red);
+  padding: 8px 12px;
+  padding-bottom: max(8px, env(safe-area-inset-bottom));
+  z-index: 1001;
+  gap: 8px;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 -5px 20px rgba(233, 69, 96, 0.2);
+}
+
+/* Compact Step Progress */
+.collapsed-step-progress {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.collapsed-step {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  background: var(--secondary-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  transition: all 0.3s ease;
+}
+
+.collapsed-step.completed {
+  background: var(--tertiary-bg);
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
+}
+
+.collapsed-step.active {
+  background: var(--accent-red);
+  border-color: var(--accent-red);
+  color: white;
+  box-shadow: 0 0 10px var(--glow-red);
+}
+
+.collapsed-step-line {
+  width: 6px;
+  height: 2px;
+  background: var(--border-color);
+}
+
+/* Compact Timer */
+.collapsed-timer {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: rgba(233, 69, 96, 0.1);
+  border: 1px solid var(--accent-red);
+  border-radius: 6px;
+}
+
+.collapsed-timer .timer-icon {
+  font-size: 12px;
+}
+
+.collapsed-timer .timer-value {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent-red);
+}
+
+/* Action Buttons */
+.collapsed-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.collapsed-attack-btn,
+.collapsed-reset-btn {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.collapsed-attack-btn {
+  background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
+  border: 2px solid #ff3333;
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+  animation: collapsedPulse 2s infinite;
+}
+
+.collapsed-attack-btn:active {
+  transform: scale(0.95);
+}
+
+.collapsed-reset-btn {
+  background: var(--secondary-bg);
+  border: 2px solid var(--accent-red);
+  color: var(--accent-red);
+}
+
+.collapsed-reset-btn:active {
+  background: var(--accent-red);
+  color: white;
+}
+
+@keyframes collapsedPulse {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.8);
+  }
+}
+
+/* Mobile breakpoint - show only on mobile */
+@media (min-width: 769px) {
+  .mobile-collapsed-bar {
+    display: none !important;
+  }
+}
+
+/* Small mobile adjustments */
+@media (max-width: 360px) {
+  .mobile-collapsed-bar {
+    bottom: 75px;
+    padding: 6px 8px;
+    gap: 6px;
+  }
+
+  .collapsed-step {
+    width: 20px;
+    height: 20px;
+    font-size: 9px;
+  }
+
+  .collapsed-step-line {
+    width: 4px;
+  }
+
+  .collapsed-timer {
+    padding: 3px 8px;
+  }
+
+  .collapsed-timer .timer-value {
+    font-size: 11px;
+  }
+
+  .collapsed-attack-btn,
+  .collapsed-reset-btn {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    font-size: 16px;
+  }
+}

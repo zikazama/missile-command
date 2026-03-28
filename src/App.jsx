@@ -4,6 +4,7 @@ import Header from './components/UI/Header';
 import WeaponMenu from './components/UI/WeaponMenu';
 import ControlPanel from './components/UI/ControlPanel';
 import BottomSheet from './components/UI/BottomSheet';
+import MobileCollapsedBar from './components/UI/MobileCollapsedBar';
 import AboutModal from './components/UI/AboutModal';
 import { useGameState, GAME_STATES } from './hooks/useGameState';
 import { CAPITALS } from './data/capitals';
@@ -12,6 +13,7 @@ import './App.css';
 
 function App() {
   const [aboutOpen, setAboutOpen] = useState(false);
+  const [bottomSheetCollapsed, setBottomSheetCollapsed] = useState(false);
   const bottomSheetRef = useRef(null);
 
   const {
@@ -177,7 +179,7 @@ function App() {
           gameState={gameState}
         />
 
-        <BottomSheet ref={bottomSheetRef}>
+        <BottomSheet ref={bottomSheetRef} onCollapseChange={setBottomSheetCollapsed}>
           <ControlPanel
             gameState={gameState}
             selectedWeapon={selectedWeapon}
@@ -197,6 +199,17 @@ function App() {
 
       {/* Scan line overlay for retro effect */}
       <div className="scanlines"></div>
+
+      {/* Mobile collapsed bar - shows step progress, timer, and buttons when bottom sheet is hidden */}
+      <MobileCollapsedBar
+        gameState={gameState}
+        selectedWeapon={selectedWeapon}
+        origin={origin}
+        target={target}
+        flightDetails={flightDetails}
+        onLaunch={handleLaunch}
+        onReset={reset}
+      />
 
       <AboutModal isOpen={aboutOpen} onClose={() => setAboutOpen(false)} />
     </div>
